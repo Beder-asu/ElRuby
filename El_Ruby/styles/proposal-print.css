@@ -1,0 +1,52 @@
+/* Company Proposal Print Styles */
+@media print {
+    .print\:hidden {
+        display: none !important;
+    }
+
+    .print\:break-inside-avoid {
+        break-inside: avoid;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hide everything except the proposal */
+    body * {
+        visibility: hidden;
+    }
+
+    .proposal-printable,
+    .proposal-printable * {
+        visibility: visible;
+    }
+
+    .proposal-printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    /* Ensure proper spacing and formatting */
+    .proposal-printable table {
+        width: 100% !important;
+        border-collapse: collapse;
+    }
+
+    .proposal-printable th,
+    .proposal-printable td {
+        border: 1px solid #000 !important;
+        padding: 8px !important;
+    }
+
+    .proposal-printable .text-muted-foreground {
+        color: #666 !important;
+    }
+
+    .proposal-printable .border-t {
+        border-top: 1px solid #000 !important;
+    }
+}
