@@ -5,7 +5,6 @@ import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
 import { NavigationHeader } from "@/components/layout/navigation-header"
-import { LowStockAlert } from "@/components/alerts/low-stock-alert"
 import { LanguageProvider } from "@/lib/language-context"
 import { FontLoader } from "@/components/font-loader"
 
@@ -46,7 +45,6 @@ export default function RootLayout({
         <FontLoader />
         <LanguageProvider>
           <NavigationHeader />
-          <LowStockAlert />
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </LanguageProvider>
         <Analytics />

@@ -127,15 +127,6 @@ export const translations = {
     confirm: "Confirm",
     close: "Close",
 
-    // Authentication
-    signIn: "Sign In",
-    email: "Email",
-    password: "Password",
-    signingIn: "Signing in...",
-    dontHaveAccount: "Don't have an account?",
-    createAccount: "Create account",
-    enterCredentials: "Enter your credentials to access your POS system",
-
     // Products & Inventory Management
     searchProducts: "Search products by name or description...",
     addToCart: "Add to Cart",
@@ -403,6 +394,10 @@ export const translations = {
     // Payment Details
     paymentDetails: "Payment Details",
     addPaymentMethodsDesc: "Add payment methods for this order. Cash overpayment will be added to customer balance.",
+    walkInPaymentRequired: "Walk-in customers must pay the full amount",
+    walkInCustomerPaymentNotice: "Walk-in customers are required to pay the full amount upfront",
+    registeredCustomerPartialPayment: "You can pay partially now and the remaining will be added to your account balance",
+    registeredCustomerZeroPayment: "You can create this order without payment - the full amount will be added to your account balance",
     addPaymentMethod: "Add Payment Method",
     orderTotal: "Order Total",
     totalPaid: "Total Paid",
@@ -440,6 +435,8 @@ export const translations = {
     customerNameRequired: "Customer name is required",
     addAtLeastOneItem: "Please add at least one item to the order",
     addAtLeastOnePayment: "Please add at least one payment",
+    walkInCustomerMustPay: "Walk-in customers must make at least one payment",
+    walkInCustomerMustPayFull: "Walk-in customers must pay the full amount",
     customerBalanceRequiresCustomer: "Customer balance payment requires selecting a customer",
     productOutOfStock: "Cannot select {productName} - product is out of stock",
     productOutOfStockDetails: "{productName} is out of stock (0 available)",
@@ -928,6 +925,10 @@ export const translations = {
     // Payment Details
     paymentDetails: "تفاصيل الدفع",
     addPaymentMethodsDesc: "إضافة طرق الدفع لهذا الطلب. سيتم إضافة الدفع النقدي الزائد إلى رصيد العميل.",
+    walkInPaymentRequired: "العملاء العاديون يجب أن يدفعوا المبلغ كاملاً",
+    walkInCustomerPaymentNotice: "العملاء العاديون مطالبون بدفع المبلغ كاملاً مقدماً",
+    registeredCustomerPartialPayment: "يمكنك الدفع جزئياً الآن وسيتم إضافة الباقي إلى رصيد حسابك",
+    registeredCustomerZeroPayment: "يمكنك إنشاء هذا الطلب بدون دفع - سيتم إضافة المبلغ كاملاً إلى رصيد حسابك",
     addPaymentMethod: "إضافة طريقة دفع",
     orderTotal: "إجمالي الطلب",
     totalPaid: "إجمالي المدفوع",
@@ -983,6 +984,8 @@ export const translations = {
     customerNameRequired: "اسم العميل مطلوب",
     addAtLeastOneItem: "يرجى إضافة عنصر واحد على الأقل للطلب",
     addAtLeastOnePayment: "يرجى إضافة طريقة دفع واحدة على الأقل",
+    walkInCustomerMustPay: "العملاء العاديون يجب أن يدفعوا مبلغاً واحداً على الأقل",
+    walkInCustomerMustPayFull: "العملاء العاديون يجب أن يدفعوا المبلغ كاملاً",
     customerBalanceRequiresCustomer: "دفع رصيد العميل يتطلب اختيار عميل",
     productOutOfStock: "لا يمكن اختيار {productName} - المنتج نفذ من المخزن",
     productOutOfStockDetails: "{productName} نفذ من المخزن (0 متاح)",

@@ -365,7 +365,16 @@ export function OrderForm({ customers, products, preselectedCustomerId }: OrderF
     }
 
     if (totalPaid <= 0) {
-      setError(t("addAtLeastOnePayment"))
+      // Only require payment for walk-in customers
+      if (customerId === "walk-in") {
+        setError(t("walkInCustomerMustPay"))
+        setIsSubmitting(false)
+        return
+      }
+      // Registered customers can have $0 payment (partial orders)
+    } else if (customerId === "walk-in" && totalPaid < orderTotal) {
+      // Walk-in customers must pay the full amount
+      setError(t("walkInCustomerMustPayFull"))
       setIsSubmitting(false)
       return
     }
@@ -521,6 +530,26 @@ export function OrderForm({ customers, products, preselectedCustomerId }: OrderF
       style: "currency",
       currency: "EGP",
     }).format(amount)
+  }
+
+  // Check if submit should be disabled
+  const isSubmitDisabled = () => {
+    if (isSubmitting || orderItems.length === 0 || hasStockIssues()) {
+      return true
+    }
+
+    // For walk-in customers, require payment
+    if (customerId === "walk-in" && totalPaid <= 0) {
+      return true
+    }
+
+    // For walk-in customers, require full payment
+    if (customerId === "walk-in" && totalPaid < orderTotal) {
+      return true
+    }
+
+    // Registered customers can submit with any payment amount (including $0)
+    return false
   }
 
   return (
@@ -707,7 +736,7 @@ export function OrderForm({ customers, products, preselectedCustomerId }: OrderF
           <div className="flex gap-2">
             <Button
               type="submit"
-              disabled={isSubmitting || orderItems.length === 0 || totalPaid <= 0 || hasStockIssues()}
+              disabled={isSubmitDisabled()}
               className="flex-1"
             >
               {isSubmitting ? t("processing") : remainingBalance <= 0.01 ? t("createOrder") : t("createPartialOrder")}

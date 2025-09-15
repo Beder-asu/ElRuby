@@ -75,8 +75,35 @@ export function PaymentSection({
       <CardHeader>
         <CardTitle>{t("paymentDetails")}</CardTitle>
         <CardDescription>
-          {t("addPaymentMethodsDesc")}
+          {customerId === "walk-in"
+            ? t("walkInPaymentRequired")
+            : t("addPaymentMethodsDesc")
+          }
         </CardDescription>
+        {customerId === "walk-in" && (
+          <div className="flex items-center gap-2 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+            <AlertTriangle className="h-4 w-4 text-orange-600" />
+            <span className="text-sm text-orange-800 font-medium">
+              {t("walkInCustomerPaymentNotice")}
+            </span>
+          </div>
+        )}
+        {customerId !== "walk-in" && remainingBalance > 0 && (
+          <div className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <DollarSign className="h-4 w-4 text-blue-600" />
+            <span className="text-sm text-blue-800 font-medium">
+              {t("registeredCustomerPartialPayment")}
+            </span>
+          </div>
+        )}
+        {customerId !== "walk-in" && totalPaid === 0 && (
+          <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <DollarSign className="h-4 w-4 text-green-600" />
+            <span className="text-sm text-green-800 font-medium">
+              {t("registeredCustomerZeroPayment")}
+            </span>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
@@ -137,7 +164,12 @@ export function PaymentSection({
           {remainingBalance > 0 ? (
             <div className="flex justify-between font-medium">
               <span>{t("remainingBalance")}:</span>
-              <span className="text-orange-600">{formatCurrency(remainingBalance)}</span>
+              <span className={customerId === "walk-in" ? "text-red-600" : "text-orange-600"}>
+                {formatCurrency(remainingBalance)}
+                {customerId === "walk-in" && (
+                  <span className="text-xs ml-1 font-normal">(Required)</span>
+                )}
+              </span>
             </div>
           ) : (
             <div className="flex justify-between font-medium">

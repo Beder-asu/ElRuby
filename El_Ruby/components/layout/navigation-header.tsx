@@ -1,19 +1,17 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Home, Users, Package, ShoppingCart, FileText, Menu, Languages, LogOut, User } from "lucide-react"
+import { Home, Users, Package, ShoppingCart, FileText, Menu, Languages, User } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useLanguage } from "@/lib/language-context"
 import { createClient } from "@/lib/supabase/client"
 import { User as SupabaseUser, Session, AuthChangeEvent } from "@supabase/supabase-js"
-import { useRouter } from "next/navigation"
 
 export function NavigationHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [user, setUser] = useState<SupabaseUser | null>(null)
   const { language, setLanguage, t, isRTL } = useLanguage()
-  const router = useRouter()
 
   useEffect(() => {
     const supabase = createClient()
@@ -32,41 +30,12 @@ export function NavigationHeader() {
     return () => subscription.unsubscribe()
   }, [])
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      if (response.redirected) {
-        router.push('/auth/login')
-      }
-    } catch (error) {
-      console.error('Logout error:', error)
-      router.push('/auth/login')
-    }
-  }
-
   const navItems = [
     { href: "/dashboard", label: t("dashboard"), icon: Home },
-    {
-      href: "/dashboard/customers",
-      label: t("customers"),
-      icon: Users,
-      children: [
-        { href: "/dashboard/customers/with-debt", label: t("customersWithDebt") }
-      ]
-    },
-    {
-      href: "/dashboard/companies",
-      label: t("companies"),
-      icon: Package,
-      children: [
-        { href: "/dashboard/companies/with-debt", label: t("companiesWeOwe") }
-      ]
-    },
+    { href: "/dashboard/customers/with-debt", label: t("customersWithDebt"), icon: Users },
+    { href: "/dashboard/companies/with-debt", label: t("companiesWeOwe"), icon: Package },
+    { href: "/dashboard/customers", label: t("customers"), icon: Users },
+    { href: "/dashboard/companies", label: t("companies"), icon: Package },
     { href: "/dashboard/inventory", label: t("inventory"), icon: Package },
     { href: "/dashboard/products", label: t("products"), icon: Package },
     { href: "/dashboard/orders", label: t("orders"), icon: ShoppingCart },
@@ -86,30 +55,13 @@ export function NavigationHeader() {
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {navItems.map((item) => (
-              <div key={item.href} className="relative group">
-                <Link
-                  href={item.href}
-                  className="transition-colors hover:text-foreground/80 text-foreground/60"
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className={`absolute mt-2 w-48 rounded-md shadow-lg bg-background border opacity-0 group-hover:opacity-100 transition-opacity z-50 ${isRTL ? 'right-0' : 'left-0'
-                    }`}>
-                    <div className="py-1">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-4 py-2 text-sm text-foreground/60 hover:text-foreground/80 hover:bg-accent"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Link
+                key={item.href}
+                href={item.href}
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                {item.label}
+              </Link>
             ))}
           </nav>
         </div>
@@ -143,13 +95,6 @@ export function NavigationHeader() {
               <Languages className="h-4 w-4" />
               <span className="text-sm font-medium">{language === "en" ? "عربي" : "EN"}</span>
             </Button>
-
-            {user && (
-              <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center space-x-1">
-                <LogOut className="h-4 w-4" />
-                <span className="hidden md:inline">{t("logout")}</span>
-              </Button>
-            )}
           </div>
         </div>
       </div>
